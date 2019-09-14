@@ -5,12 +5,12 @@ if (isset($_POST["action"])) {
     if ($_POST["action"]=="fetch") {
        $query = "
        SELECT * FROM tbl_students INNER JOIN tbl_grade
-       ON tbl_grade.grade_id = tbl_students.student_garde_id
+       ON tbl_grade.grade_id = tbl_students.student_grade_id
        ";
 
-       if (isset($_POST["search"]["value"])) {
-           $query .='
-           WHERE tbl_students.student_name LIKE "%'.$_POST["search"]["value"].'%"
+     if (isset($_POST["search"]["value"])) {
+         $query .='
+          WHERE tbl_students.student_name LIKE "%'.$_POST["search"]["value"].'%"
            OR tbl_students.student_roll_number LIKE "%'.$_POST["search"]["value"].'%"
            OR tbl_students.student_dob LIKE "%'.$_POST["search"]["value"].'%"
            ';
