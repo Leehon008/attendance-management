@@ -44,7 +44,7 @@ if (isset($_POST["action"])){
 
        echo json_encode($output);
     }//end fetching
-
+}
     if ($_POST["action"]== 'Add' || $_POST["action"] == "Edit"){
         $grade_name ='';
         $error_grade_name ='';
@@ -87,45 +87,20 @@ if (isset($_POST["action"])){
                     }
                 }
             }
-             if ($_POST["action"] == "Edit"){
-              $data = array(
-                  ':grade_name' => $grade_name,
-                  ':grade_id' => $_POST["grade_id"]
-              );
-            $query ="UPDATE tbl_grade SET grade_name = :grade_name 
-            WHERE grade_id = :grade_id";
-            $statement = $connect->prepare($query);
-            if ($statement->execute($data)){
-               $output = array(
-                  'success' => 'Data Updated Successfully',
-              );
-            }
-            }
+            if ($_POST["action"] == "edit_fetch"){
+                $query= "SELECT * FROM tbl_grade WHERE 
+                        grade_id= '".$_POST["grade_id"]."'";
+                $statement =$connect->prepare($query);
+                if($statement->execute()){
+                    $result = $statement->fetchAll();
+                    foreach ($result as $row){
+                        $output["grade_name"] = $row["grade_name"];
+                        $output["grade_id"] = $row["grade_id"];
+                    }
+                   // echo json_encode($output);
+                }
+            } 
         }
-       echo json_encode($output);
-    }
-
-    if ($_POST["action"] == "edit_fetch"){
-        $query= "SELECT * FROM tbl_grade WHERE 
-                grade_id= '".$_POST["grade_id"]."'";
-        $statement =$connect->prepare($query);
-        if($statement->execute()){
-            $result = $statement->fetchAll();
-            foreach ($result as $row){
-                $output["grade_name"] = $row["grade_name"];
-                $output["grade_id"] = $row["grade_id"];
-            }
-        }
-    }
-
-    if ($_POST["action"] == "delete"){
-        $query = "DELETE FROM tbl_grade
-        WHERE grade_id = '".$_POST["grade_id"]."'
-        ";
-        $statement = $connect->prepare($query);
-        if ($statement->execute()){
-            echo 'Data Deleted Successfully';
-        }
-    }
-//echo json_encode($output);
+     //  echo json_encode($output);
+  echo json_encode($output);
 }

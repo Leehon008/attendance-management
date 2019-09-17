@@ -160,7 +160,7 @@ include 'includes/header.php';
     });
 //remove this block its incomplete
         var grade_id = '';
-        $(document).on('click','edit_grade',function () {
+        $(document).on('click','.edit_grade',function () {
             grade_id = $(this).attr('id');
             clear_field();
             $.ajax({
