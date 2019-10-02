@@ -44,7 +44,7 @@ if (isset($_POST["action"])){
 
        echo json_encode($output);
     }//end fetching
-}
+
     if ($_POST["action"]== 'Add' || $_POST["action"] == "Edit"){
         $grade_name ='';
         $error_grade_name ='';
@@ -86,21 +86,85 @@ if (isset($_POST["action"])){
                         );
                     }
                 }
-            }
-            if ($_POST["action"] == "edit_fetch"){
-                $query= "SELECT * FROM tbl_grade WHERE 
-                        grade_id= '".$_POST["grade_id"]."'";
+            } #end of add
+            
+        #}
+            if ($_POST["action"] == "Edit"){
+              $data = array(
+                  ':grade_name' => $grade_name,
+                  ':grade_id' =>  $_POST["grade_id"]
+                );
+              $query = "UPDATE tbl_grade 
+              SET grade_name = :grade_name,
+              grade_id = :grade_id
+              WHERE grade_id =  '".$_POST["grade_id"]."'
+              ";
                 $statement =$connect->prepare($query);
-                if($statement->execute()){
-                    $result = $statement->fetchAll();
-                    foreach ($result as $row){
-                        $output["grade_name"] = $row["grade_name"];
-                        $output["grade_id"] = $row["grade_id"];
-                    }
-                   // echo json_encode($output);
+                if($statement->execute($data)){
+                    $output = array(
+                        'success' => 'Data Added Successfully',
+                    );
                 }
-            } 
+            }  //end edit
+       #  echo json_encode($output);
+        }//end error check
+
+      echo json_encode($output);
+    }#end edit or add
+
+    if ($_POST["action"]== "single_fetch") {
+        $query = "
+         SELECT * FROM tbl_grade
+         WHERE grade_id = '".$_POST["grade_id"]."'
+        ";
+        $statement =$connect->prepare($query);
+        if ($statement->execute()) {
+            $result = $statement->fetchAll();
+            $output = '
+            <div class="row">
+            ';
+            foreach ($result as $row) {
+            $output .='
+            <div class="col-md-9">
+                <table class="table">
+                    <tr>
+                     <th>Grade Name</th>
+                     <td>'.$row["grade_name"].'</td>
+                    </tr>
+                </table>
+            </div>
+            ';
+            }//end foreach
+            $output .= '</div>';
+            echo $output;
+        }//end statement execute
+    }//end single fetch
+    
+    if ($_POST["action"]=="edit_fetch") {
+        $query ="
+        SELECT * FROM tbl_grade WHERE grade_id ='".$_POST["grade_id"]."'
+        ";
+        $statement=$connect->prepare($query);
+        if ($statement->execute()) {
+            $result =$statement->fetchAll();
+            foreach ($result as $row) {
+                $output = array();
+                $output["grade_name"]=$row["grade_name"];
+                $output["grade_id"]=$row["grade_id"];
+            }//foreach
+            echo json_encode($output);
+        }//end statement execute
+    }//end edit fetch
+    
+    if ($_POST["action"] == "delete") {
+        $query = "
+        DELETE FROM tbl_grade
+        WHERE grade_id = '".$_POST["grade_id"]."'
+        ";
+        $statement=$connect->prepare($query);
+        if ($statement->execute()) {
+            echo 'Data Deleted Successfully';
         }
-     //  echo json_encode($output);
-  echo json_encode($output);
+     }//end delete action
+     
 }

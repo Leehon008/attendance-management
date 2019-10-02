@@ -4,9 +4,7 @@ include './includes/dbConnection.php';
 //include '../helpers/format_helper.php';
 
 session_start();
-if(isset($_SESSION["admin_id"])){
-    header('location:./index.php');
-}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -26,12 +24,12 @@ if(isset($_SESSION["admin_id"])){
         <link href="../libraries/css/bootstrap4.min.css " rel="stylesheet"/>
         <!-- Custom styles for this template -->
         <link href="../libraries/css/floating-labels.css" rel="stylesheet">
-        <!-- <script src="../libraries/js/jquery.min.js"></script>
+       <script src="../libraries/js/jquery.min.js"></script>
         <script src="../libraries/js/dataTables.min.js"></script>
         <script src="../libraries/js/bootstrap4.min.js"></script>
         <script src="../libraries/js/bootstrap.min.js"></script>
         <script src="../libraries/js/jquery.dataTables.min.js"></script>
-        <script src="../libraries/js/popper.min.js"></script> -->
+        <script src="../libraries/js/popper.min.js"></script> 
        <script src="http://code.jquery.com/jquery-3.3.1.min.js"
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" crossorigin="anonymous"

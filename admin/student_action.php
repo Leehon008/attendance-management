@@ -137,7 +137,7 @@ if ($_POST["action"] == "Add" || $_POST["action"]== "Edit" ) {
                         'error_student_roll_number' => 'Student Roll Number Exists'
                     );
                 }//end  of row count
-            }//end of
+            }//end of add
             
             if ($_POST["action"] == 'Edit') {
                 $data = array(
@@ -145,10 +145,9 @@ if ($_POST["action"] == "Add" || $_POST["action"]== "Edit" ) {
                     ':student_roll_number' => $student_roll_number,
                     ':student_dob' => $student_dob,
                     ':student_grade_id' => $student_grade_id,
-                    ':student_id' => $_POST["stduent_id"]
+                    ':student_id' => $_POST["student_id"]
                 )  ;
-                $query = "
-                UPDATE tbl_students 
+                $query = "UPDATE tbl_students 
                 SET  student_name = :student_name,
                 student_roll_number = :student_roll_number,
                 student_dob = :student_dob,
@@ -161,10 +160,9 @@ if ($_POST["action"] == "Add" || $_POST["action"]== "Edit" ) {
                         'success' => 'Data Edited Successfully'
                     );
                 }
-            }//end edit
+            }//end edit 
         }//end post=add
-      
-     //   echo json_encode($output);
+    #    echo json_encode($output);
     }//end error check
 
     echo json_encode($output);

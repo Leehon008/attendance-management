@@ -2,7 +2,9 @@
 
 include './includes/dbConnection.php';
 session_start();
-
+if(isset($_SESSION["admin_id"])){
+    header('location:./index.php');
+}
 $admin_user_name = '';
 $admin_password = '';
 $error_admin_user_name = '';

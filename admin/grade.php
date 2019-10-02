@@ -168,7 +168,7 @@ include 'includes/header.php';
                 method:"POST",
                 data: {action:'edit_fetch',grade_id:grade_id},
                 dataType :"json",
-                success: function (data) {
+                success:function (data) {
                     $('#grade_name').val(data.grade_name);
                     $('#grade_id').val(data.grade_id);
                     $('#modal_title').text('Edit Grade');
@@ -183,6 +183,22 @@ include 'includes/header.php';
             grade_id = $(this).attr('id');
             $('#deleteModal').modal('show');
         });
+
+        var grade_id ='';
+    $(document).on('click','.view_grade',function(){
+        teacher_id = $(this).attr('id');
+        $.ajax({
+            url:"grade_action.php",
+            method:"POST",
+            data:{
+                action:'single_fetch',grade_id:grade_id
+            },
+            success:function(data){
+                $('#viewModal').modal('show');
+                $('#teacher_details').html(data);
+            }
+        })
+    }); //end onclick view grade
 
         $('#ok_button').click(function () {
             $.ajax({
